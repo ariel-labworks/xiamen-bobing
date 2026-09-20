@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>厦门博饼 · 线上线下一起玩</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header><h1>🎲 厦门博饼</h1><p>虚拟玩家在屏幕里掷骰，现场朋友用真实骰子一起玩。</p></header>
+    <section id="setup" class="card">
+      <h2>开一桌</h2>
+      <p>每行一位玩家。选择“虚拟”会由浏览器随机掷骰；选择“现场”则手动录入真实点数。</p>
+      <div id="playerRows"></div>
+      <div class="actions"><button id="addPlayer" type="button">＋ 添加玩家</button><button id="start" class="primary" type="button">开始定顺序</button></div>
+    </section>
+    <section id="game" class="card" hidden>
+      <div class="topline"><h2 id="phaseTitle"></h2><button id="newGame" type="button">重新开桌</button></div>
+      <p id="instructions"></p>
+      <div id="controls"></div>
+      <div class="actions"><button id="action" class="primary" type="button"></button><button id="finish" type="button">结束并公布结果</button></div>
+      <h3>本场记录</h3><div id="log" class="log"></div>
+      <h3>本场累计</h3><div id="totals"></div>
+    </section>
+    <footer>随机数在本机生成。场次仅保存在此浏览器，不上传服务器。不同家庭可在开博前自行约定特殊奖项细则。</footer>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
