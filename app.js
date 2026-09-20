@@ -6,6 +6,7 @@ let game;
 try { game = JSON.parse(localStorage.getItem(key) || 'null'); } catch { game = null; }
 const escape = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const name = id => game.players.find(p => p.id === id)?.name || id;
+const dieFace = n => `<span class="die-face ${n === 4 ? 'red' : ''}" aria-label="${n}点">${['','⚀','⚁','⚂','⚃','⚄','⚅'][n]}</span>`;
 const save = () => localStorage.setItem(key, JSON.stringify(game));
 function notice(text) { alert(text); }
 function addRow(value = '', kind = 'virtual') {
@@ -41,7 +42,7 @@ function render() {
   $('setup').hidden = !!game; $('game').hidden = !game;
   if (!game) return;
   controls();
-  $('log').innerHTML = game.rolls.length ? game.rolls.map(entry => `<div class="entry"><strong>${escape(name(entry.playerId))}</strong> · ${escape(entry.label)}<div class="dice">${entry.dice.map(n => `<span class="${n === 4 ? 'red' : ''}">${n}</span>`).join(' ')}</div></div>`).reverse().join('') : '<div class="muted">尚无正式投掷</div>';
+  $('log').innerHTML = game.rolls.length ? game.rolls.map(entry => `<div class="entry"><strong>${escape(name(entry.playerId))}</strong> · ${escape(entry.label)}<div class="dice">${entry.dice.map(dieFace).join('')}</div></div>`).reverse().join('') : '<div class="muted">尚无正式投掷</div>';
   const counts = totals(game);
   const lines = game.players.map(p => `${p.name}：${Object.entries(counts[p.id]).map(([label,n]) => `${label}×${n}`).join('、') || '暂无中奖'}`);
   $('totals').textContent = lines.join('\n') + (game.champion ? `\n👑 ${game.phase === 'finished' ? '最终' : '当前'}状元：${name(game.champion.playerId)}（${game.champion.label}）` : '');
